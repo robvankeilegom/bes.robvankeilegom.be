@@ -1,35 +1,39 @@
-<div class="form-group">
+<div class="form-group col-lg-12">
   <label for="naam">Naam</label>
   <input type="text" class="form-control" id="naam" [(value)]="setting.naam" (keyup)="updateGraph($event)">
 </div>
-<div class="lg-col-6">
 
-</div>
-<div class="form-group">
+<hr />
+
+<div class="form-group col-lg-4">
   <label for="toerental">Toerental</label>
   <input type="number" class="form-control" id="toerental" [(value)]="setting.toerental" (keyup)="updateGraph($event)">
 </div>
 
-<div class="form-group">
+<div class="form-group col-lg-4">
   <label for="usr">diff. verhouding</label>
   <input type="number" class="form-control" id="diffVerhouding" [(value)]="setting.diffVerhouding" step="any" (keyup)="updateGraph($event)">
 </div>
 
-<div class="form-group">
+<div class="form-group col-lg-4">
   <label for="bandOmtrek">Bandomtrek</label>
   <input type="number" class="form-control" id="bandOmtrek" [(value)]="setting.bandOmtrek" step="any" (keyup)="updateGraph($event)">
 </div>
 
-<div class="form-group" *ngFor="let versnelling of setting.versnellingen">
+<hr />
+
+<div class="form-group col-lg-6" *ngFor="let versnelling of setting.versnellingen">
   <label for="usr">Versnelling {{ versnelling.nummer }}</label>
   <input type="number" class="form-control versnelling" [id]="versnelling.nummer" name="versnelling" [(value)]="versnelling.waarde" step="any"
     (keyup)="updateGraph($event)">
 </div>
 
-<div class="form-group">
+<hr />
+
+<div class="form-group col-lg-12">
   <button type="button" class="btn btn-success btn-block fullwidth" (click)="addVersnelling()" id="save">Voeg versnelling toe</button>
 </div>
 
-<div class="form-group">
+<div class="form-group col-lg-12">
   <button type="button" class="btn btn-success btn-block fullwidth" (click)="saveAsNewClick($event)" id="save">Opslaan</button>
 </div>

@@ -1,5 +1,3 @@
-/// <reference path="../../node_modules/@types/jquery/index.d.ts" />
-
 import { Component, OnInit } from '@angular/core'
 import { ISetting, IVersnelling } from './shared/setting.model'
 import { IPlot, IData } from './shared/plot.model';
@@ -7,6 +5,8 @@ import { IPlot, IData } from './shared/plot.model';
 import Chart from 'chart.js'
 import * as $ from 'jquery'
 import { IList, IListItem } from './shared/list.model';
+
+declare let toastr
 
 @Component({
   selector: 'app-root',
@@ -40,6 +40,7 @@ export class AppComponent implements OnInit {
 
   saveAsNew(setting: ISetting) {
     this.updateGraph(true)
+    toastr.success(setting.naam + ' opgeslagen.')
     this.currentSetting = this.defaultValue()
   }
 
