@@ -18,13 +18,15 @@ export class AppComponent implements OnInit {
   currentSetting: ISetting
   plots: IPlot[] = []
   lists: IList[] = []
+  maxPlots: number = 6
 
   colors = [
-    '#ffb3ba',
-    '#ffdfba',
-    '#ffffba',
-    '#baffc9',
-    '#bae1ff',
+    '#5481E6',
+    '#F15F74',
+    '#98CB4A',
+    '#F7D842',
+    '#F76D3C',
+    '#913CCD',
   ];
 
   ngOnInit() {
@@ -33,15 +35,18 @@ export class AppComponent implements OnInit {
   }
 
   updateCurrentSetting(setting: ISetting) {
-    console.log(setting)
     this.currentSetting = setting
     this.updateGraph()
   }
 
   saveAsNew(setting: ISetting) {
-    this.updateGraph(true)
-    toastr.success(setting.naam + ' opgeslagen.')
-    this.currentSetting = this.defaultValue()
+    if (this.plots.length < this.maxPlots) {
+      toastr.success(setting.naam + ' opgeslagen.')
+      this.currentSetting = this.defaultValue()
+      this.updateGraph(true)
+    } else {
+      toastr.error('Maximum ' + this.maxPlots + '!');
+    }
   }
 
   updateGraph(addNew?) {
@@ -60,7 +65,7 @@ export class AppComponent implements OnInit {
       label: this.currentSetting.naam,
       backgroundColor: 'rgba(0, 0, 0, 0)',
       borderWidth: 4,
-      borderColor: this.colors[this.plots.length % 5],
+      borderColor: this.colors[this.plots.length % this.maxPlots],
       showLine: true,
       lineTension: 0,
       tension: 0,
@@ -78,6 +83,7 @@ export class AppComponent implements OnInit {
     let vi: number = 1
     let list: IList = {
       naam: this.currentSetting.naam,
+      color: dataset.borderColor,
       items: []
     }
     let listItem: IListItem
@@ -158,30 +164,35 @@ export class AppComponent implements OnInit {
 
   defaultValue() {
     return {
-      naam: 'TEST PLOT',
+      naam: 'Setting ' + (this.plots.length + 1),
       toerental: 7700,
       diffVerhouding: 4.428,
       bandOmtrek: 1.79,
       versnellingen: [
         <IVersnelling>{
           nummer: 1,
-          waarde: 2.923
+          waarde: 2.923,
+          stringWaarde: '2.923'
         },
         <IVersnelling>{
           nummer: 2,
-          waarde: 1.882
+          waarde: 1.882,
+          stringWaarde: '1.882',
         },
         <IVersnelling>{
           nummer: 3,
-          waarde: 1.36
+          waarde: 1.36,
+          stringWaarde: '1.36',
         },
         <IVersnelling>{
           nummer: 4,
-          waarde: 1.068
+          waarde: 1.068,
+          stringWaarde: '1.068',
         },
         <IVersnelling>{
           nummer: 5,
-          waarde: 0.864
+          waarde: 0.864,
+          stringWaarde: '0.864',
         }
       ]
     }

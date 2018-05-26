@@ -1,31 +1,31 @@
-<div class="form-group col-lg-12">
-  <label for="naam">Naam</label>
-  <input type="text" class="form-control" id="naam" [(value)]="setting.naam" (keyup)="updateGraph($event)">
-</div>
+<h4 class="col-log-12 text-center">Berekening vd Effectieve Snelheid</h4>
+<hr>
 
-<hr />
+<div class="form-group col-lg-12">
+  <input type="text" class="form-control" id="naam" [(value)]="setting.naam" (keyup)="updateGraph($event)" (keypress)="preventCharacters($event)">
+</div>
 
 <div class="form-group col-lg-4">
   <label for="toerental">Toerental</label>
-  <input type="number" class="form-control" id="toerental" [(value)]="setting.toerental" (keyup)="updateGraph($event)">
+  <input type="text" class="form-control" id="toerental" [(value)]="setting.toerental" (keyup)="updateGraph($event)" (keypress)="preventCharacters($event)">
 </div>
 
 <div class="form-group col-lg-4">
-  <label for="usr">diff. verhouding</label>
-  <input type="number" class="form-control" id="diffVerhouding" [(value)]="setting.diffVerhouding" step="any" (keyup)="updateGraph($event)">
+  <label for="usr">Diff. verhouding</label>
+  <input type="text" class="form-control" id="diffVerhouding" [(value)]="setting.diffVerhouding" step="any" (keyup)="updateGraph($event)" (keypress)="preventCharacters($event)">
 </div>
 
 <div class="form-group col-lg-4">
   <label for="bandOmtrek">Bandomtrek</label>
-  <input type="number" class="form-control" id="bandOmtrek" [(value)]="setting.bandOmtrek" step="any" (keyup)="updateGraph($event)">
+  <input type="text" class="form-control" id="bandOmtrek" [(value)]="setting.bandOmtrek" step="any" (keyup)="updateGraph($event)" (keypress)="preventCharacters($event)">
 </div>
 
 <hr />
 
 <div class="form-group col-lg-6" *ngFor="let versnelling of setting.versnellingen">
   <label for="usr">Versnelling {{ versnelling.nummer }}</label>
-  <input type="number" class="form-control versnelling" [id]="versnelling.nummer" name="versnelling" [(value)]="versnelling.waarde" step="any"
-    (keyup)="updateGraph($event)">
+  <input type="text" class="form-control versnelling" [id]="versnelling.nummer" name="versnelling" [(value)]="versnelling.stringWaarde" step="any"
+    (keyup)="updateGraph($event)" (keypress)="preventCharacters($event)">
 </div>
 
 <hr />
@@ -36,4 +36,9 @@
 
 <div class="form-group col-lg-12">
   <button type="button" class="btn btn-success btn-block fullwidth" (click)="saveAsNewClick($event)" id="save">Opslaan</button>
+</div>
+
+<div class="footer text-center">
+    With <i class="fas fa-heart"></i> by <a href="https://robvankeilegom.be">Rob Van Keilegom</a>. <br />
+    <strong>Bug</strong> gevonden? Meld het <a href="mailto:incoming+RoobieBoobieee/bes.robvankeilegom.be@incoming.gitlab.com?Subject=BUG%20NAAM%20HIER&amp;cc=RobVanKeilegom@hotmail.com">hier</a>.
 </div>

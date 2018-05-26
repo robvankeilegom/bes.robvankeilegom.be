@@ -1,5 +1,6 @@
 export interface IList {
     naam: string,
+    color: string,
     items: IListItem[]
 }
 
