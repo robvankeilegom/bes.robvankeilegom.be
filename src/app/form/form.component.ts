@@ -43,7 +43,7 @@ export class FormComponent implements OnInit {
   }
 
   addVersnelling() {
-    if (this.setting.versnellingen.length < 10) {
+    if (this.setting.versnellingen.length < 8) {
       this.setting.versnellingen.push(<IVersnelling>{
         nummer: this.setting.versnellingen.length + 1,
         waarde: this.setting.versnellingen[this.setting.versnellingen.length - 1].waarde

@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
   plots: IPlot[] = []
   lists: IList[] = []
   maxPlots: number = 6
+  chart: any
 
   colors = [
     '#5481E6',
@@ -51,6 +52,11 @@ export class AppComponent implements OnInit {
 
   updateGraph(addNew?) {
     addNew = addNew || false
+
+    if (this.chart && typeof this.chart.destroy === 'function') {
+      this.chart.destroy();
+      
+    }
 
     if (this.plots.length !== 0 && addNew === false) {
       this.plots.pop()
@@ -129,7 +135,7 @@ export class AppComponent implements OnInit {
     let canvas = <HTMLCanvasElement>$('#chart').get(0);
     let ctx = canvas.getContext('2d');
 
-    new Chart(ctx, {
+    this.chart = new Chart(ctx, {
       type: 'scatter',
       data: {
         datasets: this.plots

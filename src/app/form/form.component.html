@@ -1,4 +1,4 @@
-<h4 class="col-log-12 text-center">Berekening vd Effectieve Snelheid</h4>
+<h4 class="col-log-12 text-center title">Berekening vd Effectieve Snelheid</h4>
 <hr>
 
 <div class="form-group col-lg-12">
@@ -24,7 +24,7 @@
 
 <div class="form-group col-lg-6" *ngFor="let versnelling of setting.versnellingen">
   <label for="usr">Versnelling {{ versnelling.nummer }}</label>
-  <input type="text" class="form-control versnelling" [id]="versnelling.nummer" name="versnelling" [(value)]="versnelling.stringWaarde" step="any"
+  <input type="text" class="form-control versnelling" [id]="versnelling.nummer" name="versnelling" [(value)]="versnelling.waarde" step="any"
     (keyup)="updateGraph($event)" (keypress)="preventCharacters($event)">
 </div>
 
