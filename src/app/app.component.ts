@@ -59,9 +59,13 @@ export class AppComponent implements OnInit {
 
     if ( this.plots.length !== 0 && addNew === false ) {
       this.plots.pop();
-    } else if ( this.lists.length !== 0 && addNew === false ) {
+    }
+
+    if ( this.lists.length !== 0 && addNew === false ) {
       this.lists.pop();
-    } else if ( this.plots.length ) {
+    }
+
+    if ( this.plots.length ) {
       this.plots[ this.plots.length - 1 ][ 'borderDash' ] = undefined;
     }
 
