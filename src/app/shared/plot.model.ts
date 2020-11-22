@@ -7,6 +7,7 @@ export interface IPlot {
   lineTension: number;
   showLine: boolean;
   tension: number;
+  borderDash: number[];
 }
 
 export interface IData {

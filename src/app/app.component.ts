@@ -55,16 +55,16 @@ export class AppComponent implements OnInit {
 
     if ( this.chart && typeof this.chart.destroy === 'function' ) {
       this.chart.destroy();
-
     }
 
     if ( this.plots.length !== 0 && addNew === false ) {
       this.plots.pop();
+    } else if ( this.lists.length !== 0 && addNew === false ) {
+      this.lists.pop();
+    } else if ( this.plots.length ) {
+      this.plots[ this.plots.length - 1 ][ 'borderDash' ] = undefined;
     }
 
-    if ( this.lists.length !== 0 && addNew === false ) {
-      this.lists.pop();
-    }
 
 
     const dataset: IPlot = {
@@ -76,7 +76,9 @@ export class AppComponent implements OnInit {
       lineTension: 0,
       tension: 0,
       data: [],
+      borderDash: [ 10, 5 ],
     };
+
 
     dataset.data.push( {
       x: 0,
@@ -138,6 +140,7 @@ export class AppComponent implements OnInit {
 
     const canvas = <HTMLCanvasElement>$( '#chart' ).get( 0 );
     const ctx = canvas.getContext( '2d' );
+
 
     this.chart = new Chart( ctx, {
       type: 'scatter',
