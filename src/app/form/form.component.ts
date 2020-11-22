@@ -33,17 +33,15 @@ export class FormComponent implements OnInit {
   }
 
   public updateGraph ( event: any ) {
-    if ( event.which !== 48 ) {
-      if ( this.setting.hasOwnProperty( event.target.id ) ) {
-        this.setting[ event.target.id ] = event.target.value;
-      }
-
-      if ( event.target.name === 'versnelling' ) {
-        this.setting.versnellingen[ event.target.id - 1 ].waarde = <number>event.target.value;
-      }
-
-      this.updateCurrentSetting.emit( this.setting );
+    if ( this.setting.hasOwnProperty( event.target.id ) ) {
+      this.setting[ event.target.id ] = event.target.value;
     }
+
+    if ( event.target.name === 'versnelling' ) {
+      this.setting.versnellingen[ event.target.id - 1 ].waarde = <number>event.target.value;
+    }
+
+    this.updateCurrentSetting.emit( this.setting );
   }
 
   public saveAsNewClick ( event: any ) {
