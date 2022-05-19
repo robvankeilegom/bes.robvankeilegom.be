@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ISetting, IVersnelling } from '../shared/setting.model';
 
-declare let toastr;
+import { ToastrService } from 'ngx-toastr';
 
 @Component( {
   selector: 'app-form',
@@ -15,9 +15,9 @@ export class FormComponent implements OnInit {
   @Output() updateCurrentSetting = new EventEmitter();
   @Output() saveAsNew = new EventEmitter();
 
-  constructor () { }
+  constructor ( private toastr: ToastrService ) {}
 
-  public ngOnInit () { }
+  public ngOnInit () {}
 
   public preventCharacters ( event: any ) {
     if ( event && event.target.id !== 'naam' ) {
@@ -55,7 +55,7 @@ export class FormComponent implements OnInit {
         waarde: this.setting.versnellingen[ this.setting.versnellingen.length - 1 ].waarde
       } );
     } else {
-      toastr.error( 'Dat zal wel genoeg zijn hé' );
+      this.toastr.error( 'Dat zal wel genoeg zijn hé' );
     }
   }
 

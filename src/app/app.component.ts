@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ISetting, IVersnelling } from './shared/setting.model';
 import { IPlot, IData } from './shared/plot.model';
 
-import Chart from 'chart.js';
+import { CategoryScale, Chart, LinearScale, LineElement, PointElement, ScatterController } from 'chart.js';
 import * as $ from 'jquery';
 import { IList, IListItem } from './shared/list.model';
 
-declare let toastr;
+import { ToastrService } from 'ngx-toastr';
+
+
+Chart.register( LinearScale, CategoryScale, ScatterController, PointElement, LineElement );
 
 @Component( {
   selector: 'app-root',
@@ -14,6 +17,8 @@ declare let toastr;
   styleUrls: [ './app.component.scss' ]
 } )
 export class AppComponent implements OnInit {
+
+  constructor ( private toastr: ToastrService ) {}
 
   currentSetting: ISetting;
   plots: IPlot[] = [];
@@ -42,11 +47,11 @@ export class AppComponent implements OnInit {
 
   saveAsNew ( setting: ISetting ) {
     if ( this.plots.length < this.maxPlots ) {
-      toastr.success( setting.naam + ' opgeslagen.' );
+      this.toastr.success( setting.naam + ' opgeslagen.' );
       this.currentSetting = this.defaultValue();
       this.updateGraph( true );
     } else {
-      toastr.error( 'Maximum ' + this.maxPlots + '!' );
+      this.toastr.error( 'Maximum ' + this.maxPlots + '!' );
     }
   }
 
@@ -153,23 +158,19 @@ export class AppComponent implements OnInit {
       },
       options: {
         responsive: true,
-        hoverMode: 'single',
         scales: {
-          yAxes: [ {
-            scaleLabel: {
+          y: {
+            title: {
               display: true,
-              labelString: 'RPM'
+              text: 'RPM'
             }
-          } ],
-          xAxes: [ {
-            gridLines: {
-              zeroLineColor: 'rgba(0, 0, 0, 1)'
-            },
-            scaleLabel: {
+          },
+          x: {
+            title: {
               display: true,
-              labelString: 'KM/U'
+              text: 'KM/U'
             }
-          } ]
+          }
         },
         animation: {
           duration: 0

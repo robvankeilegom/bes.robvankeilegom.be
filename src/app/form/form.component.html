@@ -1,7 +1,7 @@
 <h4 class="col-log-12 text-center title">Berekening vd Effectieve Snelheid</h4>
 <hr>
 
-<div class="form-group col-lg-12">
+<div class="form-group col-lg-12 p-2">
     <input
         type="text"
         class="form-control"
@@ -11,7 +11,7 @@
     >
 </div>
 
-<div class="form-group col-lg-4">
+<div class="form-group col-lg-4 p-2">
     <label for="toerental">Toerental</label>
     <input
         type="text"
@@ -23,7 +23,7 @@
     >
 </div>
 
-<div class="form-group col-lg-4">
+<div class="form-group col-lg-4 p-2">
     <label for="usr">Diff. verhouding</label>
     <input
         type="text"
@@ -36,7 +36,7 @@
     >
 </div>
 
-<div class="form-group col-lg-4">
+<div class="form-group col-lg-4 p-2">
     <label for="bandOmtrek">Bandomtrek</label>
     <input
         type="text"
@@ -52,7 +52,7 @@
 <hr />
 
 <div
-    class="form-group col-lg-6"
+    class="form-group col-lg-6 p-2"
     *ngFor="let versnelling of setting.versnellingen"
 >
     <label for="usr">Versnelling {{ versnelling.nummer }}</label>
@@ -73,7 +73,7 @@
 <div class="form-group col-lg-12">
     <button
         type="button"
-        class="btn btn-success btn-block fullwidth"
+        class="btn btn-success btn-block w-100"
         (click)="addVersnelling()"
         id="save"
     >Voeg versnelling toe</button>
@@ -82,7 +82,7 @@
 <div class="form-group col-lg-12">
     <button
         type="button"
-        class="btn btn-success btn-block fullwidth"
+        class="btn btn-success btn-block w-100 mt-2"
         (click)="saveAsNewClick($event)"
         id="save"
     >Opslaan</button>
@@ -91,6 +91,6 @@
 <div class="footer text-center">
     With <i class="fas fa-heart"></i> by <a href="https://robvankeilegom.be">Rob Van Keilegom</a>. <br />
     <strong>Bug</strong> gevonden? Meld het <a
-        href="mailto:incoming+RoobieBoobieee/bes.robvankeilegom.be@incoming.gitlab.com?Subject=BUG%20NAAM%20HIER&amp;cc=RobVanKeilegom@hotmail.com"
+        href="mailto:info@robvankeilegom.be?Subject=BUG%20NAAM%20HIER&amp;cc=RobVanKeilegom@hotmail.com"
     >hier</a>.
 </div>
