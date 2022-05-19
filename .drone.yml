@@ -7,13 +7,28 @@ trigger:
     - master
 
 steps:
+  - name: Restore cache
+    image: drillster/drone-volume-cache
+    volumes:
+      - name: cache
+        path: /cache
+    settings:
+      restore: true
+      mount:
+        - ./node_modules
+
+  - name: Install packages
+    image: node:16.14.2
+    commands:
+      - yarn config set cache-folder .yarn-cache
+      - yarn install --pure-lockfile
+
   - name: Build
     image: node:16.14.2
     commands:
-      - yarn
       - ./node_modules/.bin/ng build --configuration production --output-path /drone/src/build
 
-  - name: Upload
+  - name: Deploy
     image: robvankeilegom/ssh-rsync
     environment:
       SSH_KEY:
@@ -28,6 +43,5 @@ steps:
       - mkdir -p ~/.ssh && touch ~/.ssh/known_hosts
       - ssh-keyscan -p $SSH_PORT robvankeilegom.be >> ~/.ssh/known_hosts
       - mkdir -p ~/.ssh
-      - rsync -av -e "ssh -p $SSH_PORT" /drone/src/build/ |
-          $SSH_USER@robvankeilegom.be:~/websites/bes.robvankeilegom.be/current --delete
+      - rsync -av -e "ssh -p $SSH_PORT" /drone/src/build/ $SSH_USER@robvankeilegom.be:~/websites/bes.robvankeilegom.be/current --delete
 
