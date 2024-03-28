@@ -1,41 +1,33 @@
 ---
 kind: pipeline
-name: default
+name: Deploy
 
 trigger:
+  event:
+    include:
+      - tag
+      - push
   branch:
     - master
 
 steps:
-  - name: Restore cache
-    image: drillster/drone-volume-cache
+  - name: Install js packages
+    image: node:16
     volumes:
-      - name: cache
-        path: /cache
-    settings:
-      restore: true
-      mount:
-        - ./node_modules
-
-  - name: Install packages
-    image: node:16.14.2
-    environment:
-      SSH_KEY:
-        from_secret: drone_ssh_key
+      - name: node_cache
+        path: /tmp
     commands:
-      - eval `ssh-agent -s`
-      - echo "$SSH_KEY" | ssh-add -
-      - mkdir -p ~/.ssh && touch ~/.ssh/known_hosts
-      - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
-      - yarn config set cache-folder .yarn-cache
-      - yarn install --pure-lockfile
+      - yarn config set cache-folder /tmp
+      - yarn
 
-  - name: Build
-    image: node:16.14.2
+  - name: Build assets
+    image: node:16
     commands:
-      - ./node_modules/.bin/ng build --configuration production --output-path /drone/src/build
+      - yarn build
+    depends_on:
+      - Install js packages
 
-  - name: Deploy
+  - name: Upload assets
     image: robvankeilegom/ssh-rsync
     environment:
       SSH_KEY:
@@ -48,7 +40,11 @@ steps:
       - eval `ssh-agent -s`
       - echo "$SSH_KEY" | ssh-add -
       - mkdir -p ~/.ssh && touch ~/.ssh/known_hosts
-      - ssh-keyscan -p $SSH_PORT robvankeilegom.be >> ~/.ssh/known_hosts
-      - mkdir -p ~/.ssh
-      - rsync -av -e "ssh -p $SSH_PORT" /drone/src/build/ $SSH_USER@robvankeilegom.be:~/websites/bes.robvankeilegom.be/current --delete
-
+      - ssh-keyscan -p $SSH_PORT bes.robvankeilegom.be >> ~/.ssh/known_hosts
+      - |
+        rsync -av \
+        -e "ssh -p $SSH_PORT" \
+        /drone/src/dist/bes/ \
+        $SSH_USER@bes.robvankeilegom.be:~/websites/bes.robvankeilegom.be/current/
+    depends_on:
+      - Build assets
